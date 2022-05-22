@@ -6,17 +6,17 @@ module.exports = {
     //this is where are my user methods will go
     getUsers(req, res) {
         User.find({})
-        .then(students => {
-            return res.json(students);
+        .then(users => {
+            return res.json(users);
         })
-        .catch((err) => {
+        .catch(err => {
             console.log(err);
             return res.status(500).json(err);
         });
     },
 
     getSingleUser(req, res) {
-        User.findOne({ _id: req.params.id})
+        User.findOne({ _id: req.params.userId})
         .populate({
             path: 'thoughts',
             select: '-__v'
@@ -25,15 +25,35 @@ module.exports = {
             path: 'friends',
             select: '-__v'
         })
-        .then(student => {
-            !student 
-                ? res.status(404).json({ message: 'No student with that ID' })
-                :  res.json(student)
+        .then(user => {
+            !user 
+                ? res.status(404).json({ message: 'No user with that ID' })
+                :  res.json(user)
         })
-        .catch((err) => {
+        .catch(err => {
             console.log(err);
             return res.status(500).json(err);
         });
+    },
+
+    createUser(req, res) {
+        User.create(req.body)
+        .then(user => res.json(user))
+        .catch(err => res.status(500).json(err))
+    },
+
+    updateUser(req, res) {
+        User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $set: req.body },
+            { runValidators: true, new: true }
+        )
+        .then(user => {
+            !user
+                ? res.status(404).json({ message: 'No user with that ID' })
+                : res.json(user)
+        })
+        .catch(err => res.status(500).json(err));
     },
 
 
