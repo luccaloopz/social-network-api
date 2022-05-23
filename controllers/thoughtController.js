@@ -1,7 +1,7 @@
 const { User, Thought, Reaction } = require('../models');
 
 module.exports = {
-    //this is where are my thought methods will go
+    
     getThoughts(req, res) {
         Thought.find({})
         .then(thoughts => {
@@ -71,7 +71,31 @@ module.exports = {
             });
     },
 
-    
-    
- 
+    createReaction(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $addToSet: { reactions: req.body } },
+            { runValidators: true, new: true }
+        )
+        .then(thought => 
+            !thought
+                ? res.status(404).json({ message: 'No thought found with that ID' })
+                : res.json(thought)
+        )
+        .catch((err) => res.status(500).json(err));
+    },
+
+    deleteReaction(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $pull: { reaction: { reactionId: req.params.reactionId } } },
+            { runValidators: true, new: true }
+        )
+        .then(thought => 
+            !thought
+                ? res.status(404).json({ message: 'No thought found with that ID' })
+                : res.json(thought)
+        )
+        .catch((err) => res.status(500).json(err));
+    }
 };

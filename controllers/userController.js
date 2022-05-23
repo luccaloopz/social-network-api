@@ -1,7 +1,7 @@
 const { User } = require('../models');
 
 module.exports = {
-    //this is where are my user methods will go
+    
     getUsers(req, res) {
         User.find({})
         .then(users => {
