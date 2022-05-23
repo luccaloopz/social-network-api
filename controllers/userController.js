@@ -1,4 +1,4 @@
-const { User, Thought, Reaction } = require('../models');
+const { User } = require('../models');
 
 module.exports = {
     //this is where are my user methods will go
@@ -14,7 +14,7 @@ module.exports = {
     },
 
     getSingleUser(req, res) {
-        User.findOne({ _id: req.params.userId})
+        User.findOne({ _id: req.params.userId })
         .populate({
             path: 'thoughts',
             select: '-__v'
