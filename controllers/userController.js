@@ -5,24 +5,26 @@ module.exports = {
     getUsers(req, res) {
         User.find({})
         .then(users => {
-            return res.json(users);
+            res.json(users);
         })
         .catch(err => {
             console.log(err);
-            return res.status(500).json(err);
+            res.status(500).json(err);
         });
     },
 
     getSingleUser(req, res) {
         User.findOne({ _id: req.params.userId })
+        .populate('friends')
+        .populate('thoughts')
         .then(user => {
             !user 
                 ? res.status(404).json({ message: 'No user with that ID' })
-                :  res.json(user)
+                : res.json(user)
         })
         .catch(err => {
             console.log(err);
-            return res.status(500).json(err);
+            res.status(500).json(err);
         });
     },
 
