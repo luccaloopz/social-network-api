@@ -30,8 +30,8 @@ node server
 Lastly, you may test the routes using Insomnia. 
 
 ## **Application**
-The following is a link to a video walkthrough of the application: 
-[![Video Walkthrough]()]( "Video Walkthrough")
+The following is a link to a video walkthrough of the application routes:
+[![Video Walkthrough](./assets/Untitled_%20May%2023%2C%202022%208_20%20PM.webm)](https://drive.google.com/file/d/13jD3IPn1xt-2_oEw0XZ0m3hnHNcoD0Uy/view "Video Walkthrough")
 
 ## **License**
 The following application is covered under the MIT License.
